@@ -1,8 +1,16 @@
 Running follow command to evaluate Metadata Benchmark
 
 #!/bin/bash
-TEST_PATH=/mnt/cfs/mdtest # mount point of ChubaoFS volume
-for CLIENTS in 1 2 4 8 # number of clients
-do
-mpirun --allow-run-as-root -np $CLIENTS --hostfile hfile01 mdtest -n 5000 -u -z 2 -i 3 -d $TEST_PATH;
-done
+TEST_PATH=/cfs/mdtest # mount point of ChubaoFS volume
+
+#single client with 2 processes
+mpirun --allow-run-as-root -np 2 mdtest -F -L -z 4 -b 2 -I 1562 -u -d TEST_PATH1@TEST_PATH2
+
+#single client with 4 processes
+mpirun --allow-run-as-root -np 4 mdtest -F -L -z 4 -b 2 -I 1562 -u -d TEST_PATH1@TEST_PATH2@TEST_PATH3@TEST_PATH4
+
+#single client with 6 processes
+mpirun --allow-run-as-root -np 6 mdtest -F -L -z 4 -b 2 -I 1562 -u -d TEST_PATH1@TEST_PATH2@TEST_PATH3@TEST_PATH4@TEST_PATH5@TEST_PATH6
+
+#single client with 8 processes
+mpirun --allow-run-as-root -np 8 mdtest -F -L -z 4 -b 2 -I 1562 -u -d TEST_PATH1@TEST_PATH2@TEST_PATH3@TEST_PATH4@TEST_PATH5@TEST_PATH6@TEST_PATH7@TEST_PATH8
