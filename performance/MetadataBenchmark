@@ -1,0 +1,8 @@
+Running follow command to evaluate Metadata Benchmark
+
+#!/bin/bash
+TEST_PATH=/mnt/cfs/mdtest # mount point of ChubaoFS volume
+for CLIENTS in 1 2 4 8 # number of clients
+do
+mpirun --allow-run-as-root -np $CLIENTS --hostfile hfile01 mdtest -n 5000 -u -z 2 -i 3 -d $TEST_PATH;
+done
