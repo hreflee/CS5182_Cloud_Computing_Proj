@@ -14,3 +14,17 @@ mpirun --allow-run-as-root -np 6 mdtest -F -L -z 4 -b 2 -I 1562 -u -d TEST_PATH1
 
 #single client with 8 processes
 mpirun --allow-run-as-root -np 8 mdtest -F -L -z 4 -b 2 -I 1562 -u -d TEST_PATH1@TEST_PATH2@TEST_PATH3@TEST_PATH4@TEST_PATH5@TEST_PATH6@TEST_PATH7@TEST_PATH8
+
+
+#!/bin/bash
+TEST_PATH=/cfs/mdtest # mount point of ChubaoFS volume
+
+#multiple clients(1-8) with multiple processes
+for CLIENTS in 1 2 4 8 # number of clients
+do
+mpirun --allow-run-as-root -np $CLIENTS --hostfile /etc/hostname  mdtest -n 5000 -u -z 2 -i 3 -d /cfs/mdtest;
+done
+
+#Tips: 
+1. to evaluate this perfomance, you should enter to /cfs/mdtest. If there is no this file, you should creat one
+2.the parameter named hostfile means the location of simple text files with hosts specified
