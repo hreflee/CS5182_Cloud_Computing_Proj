@@ -2,7 +2,7 @@
 
 Since AWS education account is not allowed to create CentOS machines, so we do our virtual machines deployment on Google Cloud.
 
-We use 4 machines of machine type `e2-standard-4 (4 vCPUs, 16 GB memory)` with 50GB SSD boot disk and 50GB SSD additional disk in zone `asia-southeast1-b`.
+We use 4 machines of machine type `e2-standard-4` (4 vCPUs, 16 GB memory) with 50GB SSD boot disk and 50GB SSD additional disk in zone `asia-southeast1-b`.
 
 The system image of first machines is `CentOS 7`. And following machines use the machine image of the first machine after step 3.
 
@@ -11,8 +11,8 @@ The following table shows the roles of each machine.
 |machine id|roles|
 |-|-|
 |instance-1|master, metanode, datanode, client|
-|instance-2|master, metanode, datanode|
-|instance-3|master, metanode, datanode|
+|instance-2|master, metanode, datanode, client|
+|instance-3|master, metanode, datanode, client|
 |instance-4|datanode, monitor, client|
 
 Here are the steps we do our machines preparation.
