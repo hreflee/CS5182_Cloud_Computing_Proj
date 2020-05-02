@@ -1,41 +1,5 @@
-# Text ChubaoFS's performance with `fio`
+# Test ChubaoFS's sequential read and write performance with `fio`
 
-## Sequential Write
+In this part, a tool we made can be used to run test and retrieve logs on running `fio` tests on cluster. After setup the configurations in this tool, it can automatically connect to each machines and run `fio` testing on various numbers of machines synchrony.
 
-Run following shell file on `instance-1`
-
-```shell
-#!/bin/bash
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=write -bs=128k -direct=1 -group_reporting=1 -fallocate=none -name=test_file_c1 -numjobs=2 -nrfiles=1 -size=1G > s_w_2.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=write -bs=128k -direct=1 -group_reporting=1 -fallocate=none -name=test_file_c1 -numjobs=4 -nrfiles=1 -size=1G > s_w_4.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=write -bs=128k -direct=1 -group_reporting=1 -fallocate=none -name=test_file_c1 -numjobs=8 -nrfiles=1 -size=1G > s_w_8.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=write -bs=128k -direct=1 -group_reporting=1 -fallocate=none -name=test_file_c1 -numjobs=12 -nrfiles=1 -size=1G > s_w_12.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=write -bs=128k -direct=1 -group_reporting=1 -fallocate=none -name=test_file_c1 -numjobs=16 -nrfiles=1 -size=1G > s_w_16.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=write -bs=128k -direct=1 -group_reporting=1 -fallocate=none -name=test_file_c1 -numjobs=32 -nrfiles=1 -size=1G > s_w_32.log
-```
-
-## Sequential Read
-
-Run following shell file on `instance-1` and `instance-4`
-
-```shell
-#!/bin/bash
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=read -bs=128k -direct=1 -group_reporting=1 -fallocate=none -time_based=1 -runtime=120 -name=test_file_c1 -numjobs=2 -nrfiles=1 -size=1G > s_r_2.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=read -bs=128k -direct=1 -group_reporting=1 -fallocate=none -time_based=1 -runtime=120 -name=test_file_c1 -numjobs=4 -nrfiles=1 -size=1G > s_r_4.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=read -bs=128k -direct=1 -group_reporting=1 -fallocate=none -time_based=1 -runtime=120 -name=test_file_c1 -numjobs=8 -nrfiles=1 -size=1G > s_r_8.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=read -bs=128k -direct=1 -group_reporting=1 -fallocate=none -time_based=1 -runtime=120 -name=test_file_c1 -numjobs=12 -nrfiles=1 -size=1G > s_r_12.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=read -bs=128k -direct=1 -group_reporting=1 -fallocate=none -time_based=1 -runtime=120 -name=test_file_c1 -numjobs=16 -nrfiles=1 -size=1G > s_r_16.log
-
-fio -directory=/cfs/mountpoint -ioengine=psync -rw=read -bs=128k -direct=1 -group_reporting=1 -fallocate=none -time_based=1 -runtime=120 -name=test_file_c1 -numjobs=32 -nrfiles=1 -size=1G > s_r_32.log
-```
+This tool is attached with file `await-exec.js`. After placing it on a machine with `nodejs >= 12.0`, change the `IP_LIST` to the IP of client nodes and run it with command `node await-exec.js`
